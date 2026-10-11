@@ -63,7 +63,7 @@ function drawResult(jsonText, elementId) {
         return;
     }
     if (obj.article_count === 0) {
-        showStatus(elementId, '期間内に公開した、新しいコメント方式の記事がありません。');
+        showStatus(elementId, '期間内に公開した記事がありません。');
         return;
     }
 
