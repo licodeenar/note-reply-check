@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <title>【note】返信漏れチェック</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="【note】返信漏れチェック">
+    <meta property="og:description" content="自分の記事についたコメントに、返信し忘れていないかをチェックします。">
+    <meta property="og:locale" content="ja_JP">
+    <link rel="icon" href="https://github.com/licodeenar.png">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link media="all" href="assets/style.css" rel="stylesheet">
+    <script type='text/javascript' src='assets/script.js'></script>
+
+</head>
+
+<script>
+window.onload = function() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    const period = params.get('period');
+
+    if (id && period) {
+        document.getElementById('note_id').value = id;
+
+        // 対応するラジオボタンにチェック（URL由来の値をセレクタに埋め込まない）
+        document.querySelectorAll('input[name="note_period"]').forEach(function(radio) {
+            if (radio.value === period) radio.checked = true;
+        });
+
+        // 自動実行
+        checkReplies();
+    }
+};
+</script>
+
+<body>
+    <header>
+        <a href="https://licodeenar.github.io/"><img class="cp_icon" src="https://github.com/licodeenar.png" alt="licodeenar"></a>
+    </header>
+    <main class="cat_top">
+        <div class="cp_contents">
+            <h1><a href="." style="text-decoration:none;">【note】返信漏れチェック</a></h1>
+            <!-- 情報入力 -->
+            <form id="setting" action="JavaScript:checkReplies()">
+                <div class="cp_radio">
+                    <input type="radio" id="note_period1" name="note_period" value="1w" checked="checked">
+                    <label for="note_period1">直近1週間に公開した記事</label><br>
+                    <input type="radio" id="note_period2" name="note_period" value="2w">
+                    <label for="note_period2">直近2週間に公開した記事</label><br>
+                    <input type="radio" id="note_period3" name="note_period" value="1m">
+                    <label for="note_period3">直近1ヶ月に公開した記事</label><br>
+                </div>
+                <input type="text" class="cp_input" id="note_id" placeholder="自分の note ID または note URL"><br>
+                <input type="button" class="cp_button" id="note_exe" value="返信漏れをチェック" onclick="checkReplies()"><br>
+            </form>
+            <script>
+                document.getElementById('note_id').focus();
+            </script>
+
+            <!--- 実行結果を表示 --->
+            <div id="note_result" class="result-table"></div>
+
+            <ul class="cp_explain">
+                <li>自分の記事についたコメントに、返信し忘れていないかをチェックします。</li>
+                <li>ご自身のアカウントでお使いください。</li>
+                <li>新しいコメント方式（スレッド型）の記事が対象です。</li>
+                <li>期間内に公開した記事のコメントをチェックします。</li>
+            </ul>
+            <ul class="cp_explain_sub">
+                <li><b>返信漏れ</b>：作者からの返信が見つからないコメント</li>
+                <li><b>要確認</b>：スレッドでの返信はないものの、後から作者が親コメントを書いている（それが返事かを確認してください）</li>
+                <li>返信のあと、相手のコメントにスキをして締めくくったものは返信済みとして扱います。</li>
+            </ul>
+
+        </div>
+    </main>
+</body>
+
+</html>

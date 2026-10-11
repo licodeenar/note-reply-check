@@ -1,0 +1,568 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap");
+
+:root {
+    --accent: #33a0d3;
+    --accent-dark: #2a89b6;
+    --accent-light: #eaf6fc;
+    --bg: #f6f8f9;
+    --card: #ffffff;
+    --text: #2b2f33;
+    --text-sub: #8a9499;
+    --border: #e3e8ea;
+    --radius: 14px;
+    --shadow: 0 2px 12px rgba(20, 35, 45, 0.06);
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 1.6rem;
+    line-height: 1.7;
+    margin: 0;
+    text-align: center;
+    color: var(--text);
+    background: var(--bg);
+    font-family: "Noto Sans JP", "Open Sans", "游ゴシック体", YuGothic, "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック", "Yu Gothic", sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: var(--accent);
+}
+
+/* ヘッダー */
+
+header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 12px 20px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+}
+
+header .cp_icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: block;
+    transition: opacity 0.2s;
+}
+
+header a:hover .cp_icon {
+    opacity: 0.75;
+}
+
+/* レイアウト */
+
+main {
+    margin: 0 auto;
+    max-width: 640px;
+    padding: 0 16px;
+    box-sizing: border-box;
+}
+
+.cp_contents {
+    margin: 32px 0 64px;
+}
+
+h1 {
+    font-size: 2.6rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin: 0 0 24px;
+}
+
+h1 a {
+    color: inherit;
+}
+
+@media (min-width: 671px) {
+    h1 {
+        font-size: 3.2rem;
+    }
+}
+
+/* 説明 */
+
+.cp_explain {
+    text-align: left;
+    margin: 0 auto 24px;
+    padding: 0;
+    list-style: none;
+    display: inline-block;
+    font-size: 1.4rem;
+    color: var(--text-sub);
+}
+
+.cp_explain li {
+    padding-left: 1.4em;
+    position: relative;
+}
+
+.cp_explain li::before {
+    content: '✓';
+    color: var(--accent);
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+}
+
+.cp_explain_sub {
+    text-align: left;
+    display: inline-block;
+    margin: 10px 0 30px;
+    font-size: 1.3rem;
+    color: var(--text-sub);
+}
+
+/* フォームカード */
+
+#setting {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 28px 24px;
+    text-align: center;
+}
+
+/* インプット */
+
+.cp_input {
+    margin: 16px 0 8px;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1.4rem 2.0rem;
+    letter-spacing: 1px;
+    color: var(--text);
+    background: var(--bg);
+    border: 2px solid transparent;
+    border-radius: 50vh;
+    font-size: 1.6rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.cp_input:focus {
+    border-color: var(--accent);
+    background: var(--card);
+}
+
+.cp_input::placeholder {
+    color: var(--text-sub);
+}
+
+/* ボタン */
+
+.cp_button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 8px 0;
+    width: 100%;
+    color: #fff;
+    background-color: var(--accent);
+    border-radius: 50vh;
+    border: 0;
+    padding: 1.4rem 4.0rem;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+}
+
+.cp_button:hover:not(:disabled) {
+    background-color: var(--accent-dark);
+    box-shadow: 0 4px 14px rgba(51, 160, 211, 0.35);
+}
+
+.cp_button:active:not(:disabled) {
+    transform: translateY(1px);
+    box-shadow: none;
+}
+
+.cp_button:disabled {
+    background-color: #b9d4e0;
+    cursor: not-allowed;
+}
+
+.cp_button:focus-visible {
+    outline: 2px solid var(--accent-dark);
+    outline-offset: 2px;
+}
+
+/* ラジオボタン */
+
+.cp_radio {
+    text-align: left;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 0 0 8px;
+}
+
+.cp_radio label {
+    padding: 8px 0 8px 36px;
+    line-height: 1.4;
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+}
+
+.cp_radio label:before {
+    content: '';
+    width: 22px;
+    height: 22px;
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    transition: border-color 0.2s;
+}
+
+.cp_radio input[type="radio"]:checked + label:before {
+    border-color: var(--accent);
+}
+
+.cp_radio input[type="radio"] {
+    display: none;
+}
+
+.cp_radio input[type="radio"]:checked + label:after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    background-color: var(--accent);
+    border-radius: 50%;
+}
+
+/* チェックボックス */
+
+input[type=checkbox] {
+    display: none;
+}
+
+.cp_checkbox_data_json {
+    font-size: 1.4rem;
+    color: var(--text-sub);
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-block;
+    padding: 8px 8px 8px 30px;
+    position: relative;
+    width: auto;
+}
+
+.cp_checkbox_data_json::before {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 5px;
+    content: '';
+    display: block;
+    height: 16px;
+    width: 16px;
+    box-sizing: border-box;
+    left: 5px;
+    margin-top: -8px;
+    position: absolute;
+    top: 50%;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.cp_checkbox_data_json::after {
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    content: '';
+    display: block;
+    height: 8px;
+    left: 10px;
+    margin-top: -6px;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    transform: rotate(45deg);
+    width: 4px;
+}
+
+input[type=checkbox]:checked + .cp_checkbox_data_json::before {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+input[type=checkbox]:checked + .cp_checkbox_data_json::after {
+    opacity: 1;
+}
+
+/* 結果リスト */
+
+.result-table {
+    margin: 32px 0;
+    width: 100%;
+}
+
+.note_status {
+    color: var(--text-sub);
+    font-size: 1.4rem;
+}
+
+.note_loading::after {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: 10px;
+    vertical-align: -3px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.note_count {
+    text-align: left;
+    font-size: 1.3rem;
+    color: var(--text-sub);
+    margin: 0 4px 8px;
+}
+
+.note_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    text-align: left;
+}
+
+.note_item {
+    padding: 12px 16px;
+}
+
+.note_item + .note_item {
+    border-top: 1px solid var(--border);
+}
+
+.note_row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.note_user {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+    text-decoration: none;
+    color: inherit;
+}
+
+.note_user:hover .note_data_name {
+    color: var(--accent);
+}
+
+.note_avatar {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    object-fit: cover;
+    display: block;
+}
+
+.note_body {
+    min-width: 0;
+}
+
+.note_data_name {
+    display: block;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color 0.15s;
+}
+
+.note_data_id {
+    display: block;
+    font-size: 1.3rem;
+    color: var(--text-sub);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.note_comment_count {
+    margin-left: auto;
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.note_comment_count img {
+    display: block;
+    width: 20px;
+    height: 20px;
+}
+
+/* 詳細リンクと記事リスト */
+
+.detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    font-size: 1.3rem;
+}
+
+.detail-more {
+    white-space: nowrap;
+    color: var(--text-sub);
+    text-decoration: none;
+}
+
+.detail-more:hover {
+    color: var(--accent);
+}
+
+.btn-group {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+@media (max-width: 670px) {
+    .btn-group {
+        flex-direction: column;
+        gap: 4px;
+    }
+}
+
+.btn-sub {
+    display: inline-block;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 50vh;
+    padding: 3px 12px;
+    font-size: 1.2rem;
+    color: var(--text-sub);
+    text-decoration: none;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.btn-sub:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-light);
+}
+
+.article_list {
+    display: none;
+    margin-top: 8px;
+    padding: 10px 12px;
+    background: var(--bg);
+    border-radius: 8px;
+    font-size: 1.3rem;
+    text-align: left;
+    word-break: break-word;
+}
+
+.note_data_json {
+    display: block;
+    text-align: left;
+    font-size: 1.3rem;
+    color: var(--text-sub);
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 16px;
+    word-break: break-all;
+}
+
+/* 返信漏れチェック */
+
+.cp_explain_sub {
+    padding-left: 1.4em;
+}
+
+.cp_explain_sub li + li {
+    margin-top: 4px;
+}
+
+.note_summary {
+    display: block;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.note_empty {
+    padding: 24px 16px;
+    text-align: center;
+}
+
+.note_badge {
+    margin-left: auto;
+    flex: none;
+    padding: 2px 10px;
+    border-radius: 50vh;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.note_badge_missing {
+    color: #c0392b;
+    background: #fdecea;
+}
+
+.note_badge_check {
+    color: #b7791f;
+    background: #fdf6e3;
+}
+
+.note_comment {
+    margin-top: 8px;
+    font-size: 1.4rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.note_article {
+    display: block;
+    margin-top: 6px;
+    font-size: 1.3rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
