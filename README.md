@@ -12,8 +12,6 @@ https://licodeenar.github.io/note-reply-check/
 
 `?id=<note ID>&period=1w`（`1w` / `2w` / `1m`）を付けた URL で開くと、そのまま実行します。
 
-- 誰の ID でもチェックできますが、ご自身のアカウント向けのツールです。
-
 ## 判定ルール
 
 | ステータス | 意味 |
