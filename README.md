@@ -8,7 +8,7 @@ https://licodeenar.github.io/note-reply-check/
 ## 使い方
 
 1. 期間（直近1週間／2週間／1ヶ月に公開した記事）を選ぶ
-2. 自分の note ID または note の URL を入力して「返信漏れをチェック」を押す
+2. note ID または note の URL を入力して「返信漏れをチェック」を押す
 
 `?id=<note ID>&period=1w`（`1w` / `2w` / `1m`）を付けた URL で開くと、そのまま実行します。
 
