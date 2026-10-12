@@ -7,10 +7,10 @@ https://licodeenar.github.io/note-reply-check/
 
 ## 使い方
 
-1. 期間（直近1週間／2週間／1ヶ月／3ヶ月に公開した記事）を選ぶ
+1. 期間（直近1週間／1ヶ月／3ヶ月に公開した記事）を選ぶ
 2. note ID または note の URL を入力して「返信漏れをチェック」を押す
 
-`?id=<note ID>&period=1w`（`1w` / `2w` / `1m` / `3m`）を付けた URL で開くと、そのまま実行します。
+`?id=<note ID>&period=1w`（`1w` / `1m` / `3m`）を付けた URL で開くと、そのまま実行します。
 
 ## 判定ルール
 
@@ -47,7 +47,7 @@ web_api/    Google Apps Script
 
 ### API
 
-`GET https://script.google.com/macros/s/<デプロイID>/exec?id=<note ID または URL>&period=<1w|2w|1m|3m>`
+`GET https://script.google.com/macros/s/<デプロイID>/exec?id=<note ID または URL>&period=<1w|1m|3m>`
 
 ```json
 {

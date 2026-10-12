@@ -1,7 +1,7 @@
 //HTTP GETをハンドリングする
 function doGet(e){
 
-  //リクエストパラメータ id（note ID または URL）と period（1w / 2w / 1m）を取得する
+  //リクエストパラメータ id（note ID または URL）と period（1w / 1m / 3m）を取得する
   let paramID = getNoteUserID(e.parameter.id || '');
   let paramPeriod = e.parameter.period;
   let result;
