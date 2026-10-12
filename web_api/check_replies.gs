@@ -21,9 +21,12 @@
    GROUP_MINUTES 分以内) は1件とみなし、どれかに返信があれば全て「返信済み」。
    作者宛ての子コメントに作者がスキしていて、それより前に同じスレッドで作者が
    投稿者宛てに返信している (1往復以上ある) 場合は「スキで完結」とし、返信済みとみなす。
+   親コメントも、作者がスキしていて、それより前に同じ記事のどこかのスレッドで作者が
+   投稿者宛てに返信していれば「スキで完結」 (作者の返信に新しい親コメントで返事をしたケース)。
    スレッドで返信がなくても、同じ記事で後から作者が親コメントを書いていれば
    (親コメントで返事をするケース)「要確認」。その本文に投稿者の呼び名が
    含まれていれば「要確認(返信の可能性高)」（件数のみ集計し、一覧には出さない）。
+ 「スキで完結」は一覧にも含める（画面側で表示を切り替える）。
 */
 
 const STATUS = {
@@ -121,6 +124,9 @@ function getArticles(userID, since){
 function checkArticle(userID, since, authorKey, article, threads, stats){
   const results = [];  // 作者以外の親コメントを含む全チェック候補
   const authorRoots = [];
+  // 記事内の作者の返信 (親コメントの「スキで完結」はスレッドをまたいで探す)
+  const authorReplies = [].concat(...threads.map(t => t.comments))
+                          .filter(c => c.user.key === authorKey && toUserKey(c));
 
   threads.forEach(t => {
     const thread = t.comments;
@@ -132,7 +138,7 @@ function checkArticle(userID, since, authorKey, article, threads, stats){
         results.push({
           comment: c,
           reply: findReply(c, thread, authorKey),
-          liked: isClosedByLike(c, thread, authorKey),
+          liked: isClosedByLike(c, thread, authorKey, authorReplies),
         });
       }
     });
@@ -149,11 +155,8 @@ function checkArticle(userID, since, authorKey, article, threads, stats){
     if(r.reply){
       return;
     }
-    if(r.liked){
-      stats[STATUS.LIKED]++;
-      return;
-    }
-    const status = checkAuthorRoots(c, authorRoots);
+    // 「スキで完結」も一覧に含める (表示するかは画面側で切り替える)
+    const status = r.liked ? STATUS.LIKED : checkAuthorRoots(c, authorRoots);
     stats[status]++;
     // 「要確認(返信の可能性高)」は件数が多いため一覧に出さない (ゆるめのチェック)
     if(status === STATUS.CHECK_LIKELY){
@@ -188,13 +191,15 @@ function findReply(c, thread, authorKey){
                           && toUserKey(r) === c.user.key) || null;
 }
 
-// 1往復以上のやり取りのあと、作者のスキで締めた子コメントか
-function isClosedByLike(c, thread, authorKey){
-  if(c.is_root || !c.is_creator_liked){
+// 1往復以上のやり取りのあと、作者のスキで締めたコメントか
+// (子コメントは同じスレッド、親コメントは記事全体から作者の返信を探す)
+function isClosedByLike(c, thread, authorKey, authorReplies){
+  if(!c.is_creator_liked){
     return false;
   }
-  return thread.some(r => r.user.key === authorKey && r.created_at < c.created_at
-                          && toUserKey(r) === c.user.key);
+  const candidates = c.is_root ? authorReplies : thread;
+  return candidates.some(r => r.user.key === authorKey && r.created_at < c.created_at
+                              && toUserKey(r) === c.user.key);
 }
 
 // スレッド外の返事候補 (c より後の作者の親コメント) からステータスを決める

@@ -48,8 +48,12 @@ function showStatus(elementId, message) {
     document.getElementById(elementId).innerHTML = '<div class="note_status">' + escapeHtml(message) + '</div>';
 }
 
+// 最後に取得した結果 (「スキで完結」の表示切り替えで再描画するため)
+let lastResult = null;
+
 function drawResult(jsonText, elementId) {
     let obj;
+    lastResult = null;
 
     try {
         obj = JSON.parse(jsonText);
@@ -67,6 +71,22 @@ function drawResult(jsonText, elementId) {
         return;
     }
 
+    lastResult = obj;
+    renderRows(obj, elementId);
+}
+
+// 「スキで完結も表示する」の切り替え
+function toggleLiked() {
+    if (lastResult) {
+        renderRows(lastResult, 'note_result');
+    }
+}
+
+function renderRows(obj, elementId) {
+    const showLiked = document.getElementById('note_liked').checked;
+    const rows = obj.rows.filter(function(r) {
+        return showLiked || r.status !== 'スキで完結';
+    });
     const s = obj.stats;
     let html = '<div class="note_count">' +
         escapeHtml(obj.since) + ' 以降に公開した ' + escapeHtml(obj.article_count) + ' 記事、' +
@@ -76,16 +96,18 @@ function drawResult(jsonText, elementId) {
         'スキで完結 ' + escapeHtml(s.liked) + ' 件' +
         '</span></div>';
 
-    if (obj.rows.length === 0) {
-        html += '<div class="note_list note_empty">返信漏れ・要確認はありませんでした 🎉</div>';
+    if (rows.length === 0) {
+        html += '<div class="note_list note_empty">' +
+            (showLiked ? '返信漏れ・要確認・スキで完結はありませんでした 🎉' : '返信漏れ・要確認はありませんでした 🎉') +
+            '</div>';
         document.getElementById(elementId).innerHTML = html;
         return;
     }
 
+    const badgeClass = { '返信漏れ': 'note_badge_missing', '要確認': 'note_badge_check', 'スキで完結': 'note_badge_liked' };
     html += '<ul class="note_list">';
-    for (let i = 0; i < obj.rows.length; i++) {
-        const r = obj.rows[i];
-        const statusClass = r.status === '返信漏れ' ? 'note_badge_missing' : 'note_badge_check';
+    for (let i = 0; i < rows.length; i++) {
+        const r = rows[i];
         let title = r.article_name;
         if (title == null || title == '') {
             title = '[タイトルなし]';
@@ -99,7 +121,7 @@ function drawResult(jsonText, elementId) {
             '<span class="note_data_id">' + escapeHtml(r.date) + '</span>' +
             '</span>' +
             '</a>' +
-            '<span class="note_badge ' + statusClass + '">' + escapeHtml(r.status) + '</span>' +
+            '<span class="note_badge ' + (badgeClass[r.status] || '') + '">' + escapeHtml(r.status) + '</span>' +
             '</div>' +
             '<div class="note_comment">' + escapeHtml(r.comment) + '</div>' +
             '<a class="note_article" href="' + escapeHtml(r.article_url) + '" target="_blank" rel="noopener">' +

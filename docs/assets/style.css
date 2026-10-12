@@ -547,6 +547,11 @@ input[type=checkbox]:checked + .cp_checkbox_data_json::after {
     background: #fdf6e3;
 }
 
+.note_badge_liked {
+    color: var(--text-sub);
+    background: var(--bg);
+}
+
 .note_comment {
     margin-top: 8px;
     font-size: 1.4rem;

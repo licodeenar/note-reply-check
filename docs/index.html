@@ -24,6 +24,7 @@ window.onload = function() {
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
     const period = params.get('period');
+    const liked = params.get('liked'); // "1" でチェック
 
     if (id && period) {
         document.getElementById('note_id').value = id;
@@ -32,6 +33,11 @@ window.onload = function() {
         document.querySelectorAll('input[name="note_period"]').forEach(function(radio) {
             if (radio.value === period) radio.checked = true;
         });
+
+        // 「スキで完結」を表示するチェックボックス
+        if (liked === '1') {
+            document.getElementById('note_liked').checked = true;
+        }
 
         // 自動実行
         checkReplies();
@@ -58,6 +64,8 @@ window.onload = function() {
                 </div>
                 <input type="text" class="cp_input" id="note_id" placeholder="note ID または note URL"><br>
                 <input type="button" class="cp_button" id="note_exe" value="返信漏れをチェック" onclick="checkReplies()"><br>
+                <input type="checkbox" name="note_liked" id="note_liked" onchange="toggleLiked()">
+                <label for="note_liked" class="cp_checkbox_data_json">「スキで完結」も表示する</label>
             </form>
             <script>
                 document.getElementById('note_id').focus();
@@ -74,7 +82,7 @@ window.onload = function() {
             <ul class="cp_explain_sub">
                 <li><b>返信漏れ</b>：作者からの返信が見つからないコメント</li>
                 <li><b>要確認</b>：スレッドでの返信はないものの、後から作者が親コメントを書いている（それが返事かを確認してください）</li>
-                <li>返信のあと、相手のコメントにスキをして締めくくったものは返信済みとして扱います。</li>
+                <li><b>スキで完結</b>：返信のあと、相手のコメントにスキをして締めくくったもの。返信済みとして扱い、チェックを入れたときだけ表示します</li>
             </ul>
 
         </div>
