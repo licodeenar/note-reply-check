@@ -7,10 +7,10 @@ https://licodeenar.github.io/note-reply-check/
 
 ## 使い方
 
-1. 期間（直近1週間／2週間／1ヶ月に公開した記事）を選ぶ
+1. 期間（直近1週間／2週間／1ヶ月／3ヶ月に公開した記事）を選ぶ
 2. note ID または note の URL を入力して「返信漏れをチェック」を押す
 
-`?id=<note ID>&period=1w`（`1w` / `2w` / `1m`）を付けた URL で開くと、そのまま実行します。
+`?id=<note ID>&period=1w`（`1w` / `2w` / `1m` / `3m`）を付けた URL で開くと、そのまま実行します。
 
 ## 判定ルール
 
@@ -47,7 +47,7 @@ web_api/    Google Apps Script
 
 ### API
 
-`GET https://script.google.com/macros/s/<デプロイID>/exec?id=<note ID または URL>&period=<1w|2w|1m>`
+`GET https://script.google.com/macros/s/<デプロイID>/exec?id=<note ID または URL>&period=<1w|2w|1m|3m>`
 
 ```json
 {
@@ -69,4 +69,4 @@ web_api/    Google Apps Script
 ### 制限
 
 GAS の 1 回の実行は 6 分まで、URL 取得は 1 日 2 万回までです（同じ Google アカウントの他のスクリプトと合算）。
-1 ヶ月分のチェックで数十〜百回程度の取得になります。
+ほぼ毎日更新しているアカウントの 3 ヶ月分（約 100 記事）で 300 回程度の取得になります。
