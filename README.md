@@ -39,7 +39,7 @@ web_api/    Google Apps Script
   do_get.gs         ウェブアプリの入口。?id=&period= を受け取り JSON を返す
   config.gs         定数
   check_replies.gs  コメントの取得と判定
-  test.gs           Python 版との照合用 (testCompare) と doGet の動作確認 (testDoGet)
+  (test.gs)         Python 版との照合用。他のアカウントの情報を含むため .gitignore で除外し、手元にだけ置く
 ```
 
 ### GAS のデプロイ
